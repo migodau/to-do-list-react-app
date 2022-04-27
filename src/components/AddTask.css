@@ -1,0 +1,16 @@
+.add-task-container {
+    padding: 8px 0;
+    display: flex;
+    gap: 8px;
+}
+
+.add-task-container input, .add-task-container select {
+    border: 1px #ccc solid;
+    border-radius: 5px;
+    padding: 6px 8px;
+    font-size: 14px;
+}
+
+.add-task-container input {
+    padding: 8px;
+}
