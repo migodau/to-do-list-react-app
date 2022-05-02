@@ -1,0 +1,19 @@
+.not-found-page {
+    color: #eee;
+    text-align: center;
+    background-color: #000;
+    border-color: #000;
+}
+
+.not-found-text {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+.not-found-path {
+    color: #C2185B;
+}
+
+.not-found-image {
+    width: 100%;
+}
