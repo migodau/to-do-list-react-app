@@ -1,27 +1,51 @@
-import { useState } from 'react'
+import axios from 'axios';
+import { useEffect, useState } from 'react'
 import { AddTask } from '../components/AddTask';
 import { TaskModel } from '../models/task.model';
 import { Task } from './../components/Task'
 
 export function ToDo() {
-    const [ tasks, setTasks ] = useState(
-        initialTasks
-    );
+    const [ tasks, setTasks ] = useState([] as TaskModel[]);
 
-    const addTask = (newTask: TaskModel) => {
-        setTasks([ ...tasks, newTask ]);
+    useEffect(() => {
+        const fetchTasks = async () => {
+            const { data } = await axios.get('http://localhost:3004/tasks');
+            setTasks(data);
+        }
+
+        fetchTasks();
+    }, []);
+
+    const addTask = async (newTask: TaskModel) => {
+        await axios.post('http://localhost:3004/tasks', newTask)
+        .then(({ data }) => {
+            setTasks([ ...tasks, data ]);
+        })
+        .catch((error)  => console.log(error));
     }
 
-    const toggleDone = (i: number) => {
-        const newTasks = [ ...tasks ];
-        newTasks[i].done = !newTasks[i].done;
-        setTasks(newTasks);
+    const toggleDone = async (i: number) => {
+        const task = tasks[i];
+        const taskId = task.id;
+        task.done = !task.done;
+        await axios.put(`http://localhost:3004/tasks/${taskId}`, task)
+        .then(() => {
+            const newTasks = [ ...tasks ];
+            newTasks[i] = task;
+            setTasks(newTasks);
+        })
+        .catch((error)  => console.log(error));
     }
 
-    const removeTask = (i: number) => {
-        const newTasks = [ ...tasks ];
-        newTasks.splice(i,1);
-        setTasks(newTasks);
+    const removeTask = async (i: number) => {
+        const taskId = tasks[i].id;
+        await axios.delete(`http://localhost:3004/tasks/${taskId}`)
+        .then(() => {
+            const newTasks = [ ...tasks ];
+            newTasks.splice(i,1);
+            setTasks(newTasks);
+        })
+        .catch((error)  => console.log(error));
     }
 
     return (
@@ -43,12 +67,3 @@ export function ToDo() {
     );
 
 }
-
-const initialTasks = [
-    {
-        emoji: '🐱',
-        text: 'feed the cat',
-        done: false,
-    }
-
-]
