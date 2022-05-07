@@ -13,7 +13,7 @@ export function ToDo() {
 
             <AddTask />
 
-            {tasks.map((task: TaskModel, i: number) => {
+            {tasks?.map((task: TaskModel, i: number) => {
                 return (
                     <Task key={i} 
                         task={task} taskIndex={i}
