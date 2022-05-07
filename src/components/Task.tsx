@@ -1,20 +1,22 @@
+import { useContext } from 'react';
 import { TaskModel } from '../models/task.model';
+import { TasksContext } from '../providers/tasks';
 import './Task.css';
 
 type TaskProps = {
     task: TaskModel,
     taskIndex: number,
-    onDone: any,
-    onRemove: any,
 }
 
-export function Task({task, taskIndex, onDone, onRemove}: TaskProps) {
+export function Task({task, taskIndex}: TaskProps) {
+    const { toggleDone, removeTask }: any = useContext(TasksContext);
+    
     const handleTaskClick = () => {
-        onDone(taskIndex);
+        toggleDone(taskIndex);
     }
 
     const handleRemove = () => {
-        onRemove(taskIndex);
+        removeTask(taskIndex);
     }
     
     return (

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { TasksContext } from '../providers/tasks';
 import './AddTask.css';
 
-type AddTaskProps = {
-    onAdd: any
-}
-export function AddTask({ onAdd }: AddTaskProps) {
+export function AddTask() {
+    
+    const { addTask }: any = useContext(TasksContext);
+    
     const [text, setText] = useState('');
     const [emoji, setEmoji] = useState('💡');
     
@@ -21,7 +22,7 @@ export function AddTask({ onAdd }: AddTaskProps) {
             text,
             done: false
         };
-        onAdd(task);
+        addTask(task);
         setText('');
     }
 
