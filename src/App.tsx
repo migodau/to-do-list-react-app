@@ -1,9 +1,12 @@
+import { TasksProvider } from './providers/tasks';
 import { AppRoutes } from './Routes';
 
 function App() {
 
   return (
-    <AppRoutes/>
+    <TasksProvider>
+      <AppRoutes/>
+    </TasksProvider>
   );
 
 }
